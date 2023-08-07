@@ -1,4 +1,4 @@
-use sqlx::types::{JsonValue};
+use sqlx::types::JsonValue;
 use sqlx::PgPool;
 use serde::{Deserialize, Serialize};
 use bigdecimal::BigDecimal;
@@ -33,14 +33,16 @@ pub struct Record {
 }
 
 
-pub async fn list_record(c: PgPool) -> Result<Vec<Record>, String> {
+pub async fn list_record(p: PgPool, project: String, release: String) -> Result<Vec<Record>, String> {
   let rows: Vec<Record> = sqlx::query_as!(
     Record,
-    r#"select * from record.report"#
-  ).fetch_all(&c)
+    r#"select * from record.report where project = ($1) and release = ($2)"#,
+    project,
+    release
+  ).fetch_all(&p)
     .await.expect("Unable to list Record");
 
-  // println!("{:?}", rows);
+  println!("{:?}", rows);
 
   Ok(rows)
 }
