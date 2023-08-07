@@ -1,9 +1,11 @@
 use app::db::{record,client};
 use sqlx::PgPool;
-use tokio::runtime::Runtime;
 
-fn main() {
-  let pool:PgPool = Runtime::new().unwrap().block_on(client::establish_connection());
+#[tokio::main(flavor = "current_thread")]
+async fn main() {
+  let pool:PgPool = client::establish_connection().await;
 
-  Runtime::new().unwrap().block_on(record::list_record(pool, String::from("next"), String::from("aug-release")));
+  let report: Result<Vec<record::Record>, String> = record::list_record(pool, String::from("next"), String::from("aug-release")).await;
+
+  println!("{:?}", report);
 }

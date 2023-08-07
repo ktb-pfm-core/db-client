@@ -38,11 +38,9 @@ pub async fn list_record(p: PgPool, project: String, release: String) -> Result<
     Record,
     r#"select * from record.report where project = ($1) and release = ($2)"#,
     project,
-    release
+    release,
   ).fetch_all(&p)
     .await.expect("Unable to list Record");
-
-  println!("{:?}", rows);
 
   Ok(rows)
 }
