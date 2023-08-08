@@ -4,9 +4,7 @@ use sqlx::types::JsonValue;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Record {
-  pub release: Option<String>,
   pub execution_type: Option<String>,
-  pub project: Option<String>,
   pub service: Option<String>,
   pub flow: Option<String>,
   pub tag: Option<String>,
@@ -30,4 +28,6 @@ pub struct Record {
   pub memory_request: Option<Vec<BigDecimal>>,
   pub memory_limit: Option<Vec<BigDecimal>>,
   pub timestamp: Option<String>,
+  pub start_time: Option<String>,
+  pub end_time: Option<String>,
 }
