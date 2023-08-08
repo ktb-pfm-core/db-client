@@ -13,14 +13,10 @@ use crate::{
 
 
 pub async fn health_checker_handler() -> impl IntoResponse {
-    const MESSAGE: &str = "Simple CRUD API with Rust, SQLX, Postgres,and Axum";
-
-    let json_response = json!({
-        "status": "success",
-        "message": MESSAGE
-    });
-
-    Json(json_response)
+  Json(json!({
+    "status": "200",
+    "message": "OK"
+  }))
 }
 
 pub async fn get_report_handler(
