@@ -1,7 +1,7 @@
-use sqlx::types::JsonValue;
-use sqlx::PgPool;
 use serde::{Deserialize, Serialize};
 use bigdecimal::BigDecimal;
+use sqlx::types::JsonValue;
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Record {
   pub release: Option<String>,
@@ -30,17 +30,4 @@ pub struct Record {
   pub memory_request: Option<Vec<BigDecimal>>,
   pub memory_limit: Option<Vec<BigDecimal>>,
   pub timestamp: Option<String>,
-}
-
-
-pub async fn list_record(p: PgPool, project: String, release: String) -> Result<Vec<Record>, String> {
-  let rows: Vec<Record> = sqlx::query_as!(
-    Record,
-    r#"select * from record.report where project = ($1) and release = ($2)"#,
-    project,
-    release,
-  ).fetch_all(&p)
-    .await.expect("Unable to list Record");
-
-  Ok(rows)
 }
