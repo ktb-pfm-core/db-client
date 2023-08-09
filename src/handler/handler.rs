@@ -25,7 +25,7 @@ pub async fn get_report_handler(
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     let result = sqlx::query_as!(
       Record,
-      r#"select execution_type,service,flow,tag,vu,duration,tps,error_rate,rt_avg,rt_min,rt_max,rt_p90,rt_p95,rt_p99,is_cpu_below_request,resource_map,replica_map,cpu_utilization,cpu_request,cpu_limit,memory_utilization,memory_request,memory_limit,timestamp,start_time,end_time from record.report where project = ($1) and release = ($2)"#,
+      r#"select execution_type,service,flow,flow_level_id,tag,vu,duration,tps,error_rate,rt_avg,rt_min,rt_max,rt_p90,rt_p95,rt_p99,is_cpu_below_request,resource_map,replica_map,cpu_utilization,cpu_request,cpu_limit,memory_utilization,memory_request,memory_limit,timestamp,start_time,end_time from record.report where project = ($1) and release = ($2)"#,
       project,
       release,
     ).fetch_all(&data.db)
