@@ -1,4 +1,5 @@
-in this directory demonstrates how to connect to CockroachDB with the [sqlx](https://crates.io/crates/sqlx). 
+in this directory demonstrates how to connect to CockroachDB with the [sqlx](https://crates.io/crates/sqlx).
+
 ## Prerequisites
 
 You must have rust and Cargo installed on your local machine, and a running CockroachDB cluster.
