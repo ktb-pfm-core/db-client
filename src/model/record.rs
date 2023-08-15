@@ -4,10 +4,11 @@ use sqlx::types::JsonValue;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Record {
-  pub execution_type: Option<String>,
+  // pub execution_type: Option<String>,
   pub service: Option<String>,
   pub flow: Option<String>,
   pub flow_level_id: Option<i64>,
+  pub api_level_id: Option<i64>,
   pub tag: Option<String>,
   pub vu: Option<i16>,
   pub duration: Option<String>,
