@@ -9,6 +9,8 @@ pub struct Record {
   pub flow: Option<String>,
   pub flow_level_id: Option<i64>,
   pub api_level_id: Option<i64>,
+  pub service_idx: Option<String>,
+  pub api_idx: Option<i16>,
   pub tag: Option<String>,
   pub vu: Option<i16>,
   pub duration: Option<String>,
