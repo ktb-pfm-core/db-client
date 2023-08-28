@@ -31,6 +31,7 @@ pub struct Record {
   pub memory_utilization: Option<Vec<BigDecimal>>,
   pub memory_request: Option<Vec<BigDecimal>>,
   pub memory_limit: Option<Vec<BigDecimal>>,
+  pub monitoring_db: Option<JsonValue>,
   pub timestamp: Option<String>,
   pub start_time: Option<String>,
   pub end_time: Option<String>,
