@@ -8,7 +8,7 @@ pub fn create_router(app_state: Arc<AppState>) -> Router {
     Router::new()
         .route("/healthz", get(handler::health_checker_handler))
         .route(
-            "/api/project/:project/release/:release/execution-type/:execution_type",
+            "/api/v1/report",
             get(handler::get_report_handler),
         )
         .with_state(app_state)
