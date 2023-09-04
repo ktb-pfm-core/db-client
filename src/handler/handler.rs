@@ -17,7 +17,7 @@ pub struct GetReport {
     project: String,
     release: String,
     execution_type: String,
-    duration_microseconds: i64,
+    duration_seconds: i64,
 }
 
 pub async fn health_checker_handler() -> impl IntoResponse {
@@ -40,7 +40,7 @@ pub async fn get_report_handler(
       PgInterval {
         days: 0,
         months: 0,
-        microseconds: payload.duration_microseconds,
+        microseconds: payload.duration_seconds * 1_000_000,
     },
     ).fetch_all(&data.db)
       .await;
