@@ -8,7 +8,7 @@ use axum::http::{
 pub fn new_cors() -> CorsLayer{
   CorsLayer::new()
         .allow_origin("http://localhost:3000".parse::<HeaderValue>().unwrap())
-        .allow_methods([Method::GET])
+        .allow_methods([Method::GET, Method::POST])
         .allow_credentials(true)
         .allow_headers([AUTHORIZATION, ACCEPT, CONTENT_TYPE])
 }
