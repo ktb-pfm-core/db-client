@@ -11,6 +11,8 @@ pub struct Record {
   pub api_level_id: Option<i64>,
   pub service_idx: Option<String>,
   pub api_idx: Option<i16>,
+  pub api_method: Option<String>,
+  pub api_path: Option<String>,
   pub tag: Option<String>,
   pub vu: Option<i16>,
   pub duration: Option<String>,
