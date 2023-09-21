@@ -16,7 +16,7 @@ use crate::{
 pub struct GetReport {
     project: String,
     release: String,
-    execution_type: String,
+    execution_type: Vec<String>,
     duration_seconds: i64,
 }
 
@@ -33,10 +33,11 @@ pub async fn get_report_handler(
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     let result = sqlx::query_as!(
       Record,
-      r#"select service,flow,flow_level_id,api_level_id,service_idx,api_idx,api_method,api_path,tag,vu,cast(duration as string),tps,error_rate,rt_avg,rt_min,rt_max,rt_p90,rt_p95,rt_p99,is_cpu_below_request,resource_map,replica_map,cpu_utilization,cpu_request,cpu_limit,memory_utilization,memory_request,memory_limit,monitoring_db,timestamp,start_time,end_time from record.report where project = ($1) and release = ($2) and execution_type = ($3) and duration >= ($4)"#,
+      r#"select service,flow,flow_level_id,api_level_id,service_idx,api_idx,api_method,api_path,tag,vu,cast(duration as string),tps,error_rate,rt_avg,rt_min,rt_max,rt_p90,rt_p95,rt_p99,is_cpu_below_request,resource_map,replica_map,cpu_utilization,cpu_request,cpu_limit,memory_utilization,memory_request,memory_limit,monitoring_db,timestamp,start_time,end_time from record.report where project = ($1) and release = ($2) and execution_type = ANY($3) and duration >= ($4)"#,
       payload.project,
       payload.release,
-      payload.execution_type,
+      // https://github.com/launchbadge/sqlx/blob/main/FAQ.md#how-can-i-do-a-select--where-foo-in--query
+      &payload.execution_type[..],
       PgInterval {
         days: 0,
         months: 0,
@@ -55,7 +56,7 @@ pub async fn get_report_handler(
         Err(_) => {
             let error_response = serde_json::json!({
                 "status": "fail",
-                "message": format!("Report with Project: {}, Release: {}, Execution Type: {} not found.", payload.project, payload.release, payload.execution_type)
+                "message": format!("Report with Project: {}, Release: {}, Execution Type: {:?} not found.", payload.project, payload.release, payload.execution_type)
             });
             Err((StatusCode::NOT_FOUND, Json(error_response)))
         }
